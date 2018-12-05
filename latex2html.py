@@ -9,18 +9,18 @@ def clear_text(text):
             lines.append(line)
     return ' '.join(lines)
 
-def getli(t):
+def getitem(t):
     item = ''
     if t.getdata()=='[ITEM]':
         item  = '<li>%s</li>\n'%t.getchildren()[0].getdata()
     return item
 
 
-def getul(t):
+def getitemize(t):
     itemize =''
     for node in t.getchildren():
         if node.getdata() == '[ITEM]':
-            itemize += getli(node)
+            itemize += getitem(node)
         elif node.getdata() == '[ITEMS]':
             itemize += getul(node)
     return itemize
@@ -29,7 +29,7 @@ def gettxt(t):
     txt = ''
     for node in t.getchildren():
         if node.getdata() == '[ITEMIZE]':
-            items = getul(node)
+            items = getitemize(node)
             txt += '<ul>\n%s</ul>\n' % items
         else:
             txt += '<p>%s</p>\n' % node.getdata()
