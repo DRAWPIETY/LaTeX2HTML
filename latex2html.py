@@ -22,15 +22,14 @@ def getitemize(t):
         if node.getdata() == '[ITEM]':
             itemize += getitem(node)
         elif node.getdata() == '[ITEMS]':
-            itemize += getul(node)
+            itemize += getitemize(node)
     return itemize
 
 def gettxt(t):
     txt = ''
     for node in t.getchildren():
         if node.getdata() == '[ITEMIZE]':
-            items = getitemize(node)
-            txt += '<ul>\n%s</ul>\n' % items
+            txt += '<ul>\n%s</ul>\n' % getitemize(node)
         else:
             txt += '<p>%s</p>\n' % node.getdata()
     return txt
